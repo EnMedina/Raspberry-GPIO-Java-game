@@ -1,20 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package javaapplication7;
 
 import java.util.Random;
 import java.util.Scanner;
-import javaapplication7.*;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.RaspiPin;
-import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
-import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 /**
  *
  * @author Admin
@@ -33,7 +26,8 @@ public class JavaApplication7 {
 
 		Scanner in = new Scanner(System.in);
 		Random rand =new Random();
-                boolean accion=false;
+                boolean accion=false; 
+                ascii impresion= new ascii();
 		// Game variables
 		String[] enemies = { "OSCAR", "ABRAHAM", "GERMAN", "MAGADAN", "EL PROFE", "GIGAPROFE"};
 		int maxEnemyHealth = 75;
@@ -49,13 +43,16 @@ public class JavaApplication7 {
 		
 		boolean running = true;
 
-                System.out.println("Bienvenido al salon de 7mo semestre"); //
-		
+                System.out.println(impresion.Inicio); //
+                while(!Boton1.isHigh()&&!Boton2.isHigh()&&!Boton3.isHigh()){
+                //do nothing while it cycles
+                }
+		try{Thread.sleep(500);}catch(InterruptedException ex){};
 		GAME: // Label so that we can loop back when if we want to continue the game
 		while(health>1 && enemy<6){			
 			int enemyHealth = rand.nextInt(maxEnemyHealth);
 			
-                        ascii impresion= new ascii();
+                       
 			System.out.println("\t# " + enemies[enemy] + " aparecio! #\n");
 			
 			while(enemyHealth > 0) {										// Give you options to fight, drink a health pot or run when the enemy HP > 0
@@ -82,7 +79,7 @@ public class JavaApplication7 {
 					
 					enemyHealth -= damageDealt;
 					health -= damageTaken;
-                                        Runtime.getRuntime().exec("clear");
+                                        
 	
 					System.out.println("\t> Le ocasionaste a " + enemy + " un daño de " + damageDealt + " puntos de vida");
 					System.out.println("\t> Recibiste " + damageTaken + " puntos de dano");
@@ -147,24 +144,24 @@ public class JavaApplication7 {
 
 			
 			while(accion==false){
-				
-			
-			if(Boton1.isHigh()) {
-                                
+                            
+                            if(Boton1.isHigh()) {
 				System.out.println("You continiue on your adventure!");
                                 accion=true;
-			}
-			else if(Boton2.isHigh()) {
+                                try{Thread.sleep(500);}catch(InterruptedException ex){};
+                            }
+                            else if(Boton2.isHigh()) {
 				System.out.println("Te has rendido cobardemente");
+                                try{Thread.sleep(500);}catch(InterruptedException ex){};
 				break;
-			}
+                            }
                         }
                         }
-		}
-               
-		
-		System.out.println("######################");
-		System.out.println("# THANKS FOR PLAYING #");
-		System.out.println("######################");    }
+                }
+		if(enemy<6)
+		System.out.println(impresion.Ganaste); 
+                else
+                    System.out.println(impresion.perdiste);
+    }
     
 }
