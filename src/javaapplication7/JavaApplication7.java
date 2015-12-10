@@ -46,19 +46,19 @@ public class JavaApplication7 {
                 }
 		try{Thread.sleep(500);}catch(InterruptedException ex){};
 		GAME: // Label so that we can loop back when if we want to continue the game
-		while(health>1 && enemy<6){			
+		while(health>=1 && enemy<6){			
 			int enemyHealth = rand.nextInt(maxEnemyHealth);
 			System.out.println("\t# " + enemies[enemy] + " aparecio! #\n");
 			while(enemyHealth >0 && health>0) {										// Give you options to fight, drink a health pot or run when the enemy HP > 0
 				accion=false;
                                 String monstAscii=impresion.retString(enemy);
                                 System.out.println(monstAscii);
-                                System.out.println("\tThe quedan:" + health+ "puntos de vida.");						
-				System.out.println("\t" + enemies[enemy] + "tiene " + enemyHealth + "puntos de vida restantes.");
-				System.out.println("\n\t QUE QUIERES HACER?");
+                                System.out.println("\n\n\n\tThe quedan:" + health+ "puntos de vida.");						
+				System.out.println("\n\t" + enemies[enemy] + "tiene " + enemyHealth + "puntos de vida restantes.");
+				System.out.println("\n\n\t QUE QUIERES HACER?");
 				System.out.println("\t1. Atacar");
 				System.out.println("\t2. Beber pocion recuperadora");
-				System.out.println("\t3. Rendirte\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+				System.out.println("\t3. Rendirte\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                                 while( accion==false){
                                     if(Boton1.isHigh()) {									
 					int damageDealt = rand.nextInt(attackDamage);
@@ -89,9 +89,10 @@ public class JavaApplication7 {
 					else {
 						System.out.println("\t> No tienes ya pociones, vence enemigos para obtener mas");
 					}
+                                        try{Thread.sleep(1000);}catch(InterruptedException ex){}
                                     }
                                     else if(Boton3.isHigh()) {
-					System.out.println("\t The rendiste cobardemente ante " + enemies[enemy] + "!");
+					System.out.println("\t The rendiste cobardemente ante " + enemies[enemy] + "\n\n\n!");
 					health=-1;
                                         break;
                                     }
@@ -104,17 +105,17 @@ public class JavaApplication7 {
                             System.out.println(" # Venciste a  " + enemies[enemy] + " # \n");
                             enemy++;
                             if(enemy<6){
-                                System.out.println(" # Te quedan -- " + health + " -- puntos de vida.");
+                                System.out.println("\n\n\n # Te quedan -- " + health + " -- puntos de vida.");
                                 if(rand.nextInt(100) > healthPotionDropChance) {
                                     numHealthPots++;
-                                    System.out.println(  enemy + "solto una pocion");
-                                    System.out.println(" # You now have " + numHealthPots + "health pot(s)");
+                                    System.out.println(  enemies[enemy-1] + " solto una pocion");
+                                    System.out.println(" # Te quedan  " + numHealthPots + " pociones ");
                                 }
                                 accion=false;
                                 System.out.println("----------------------------");
                                 System.out.println("Que procede?");
                                 System.out.println("1. Siguiente oponente");
-                                System.out.println("2. Escapar del laberinto");
+                                System.out.println("2. Escapar del laberinto\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                                 while(accion==false){
                                     if(Boton1.isHigh()) {
                                         System.out.println("You continiue on your adventure!");
