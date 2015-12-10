@@ -23,6 +23,7 @@ public class JavaApplication7 {
                 final GpioPinDigitalInput Boton1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
                 final GpioPinDigitalInput Boton2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03, PinPullResistance.PULL_DOWN);
                 final GpioPinDigitalInput Boton3 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_04, PinPullResistance.PULL_DOWN);
+                final  String ESC = "\033[";
 		Random rand =new Random();
                 boolean accion=false; 
                 ascii impresion= new ascii();
@@ -48,7 +49,7 @@ public class JavaApplication7 {
 		while(health>1 && enemy<6){			
 			int enemyHealth = rand.nextInt(maxEnemyHealth);
 			System.out.println("\t# " + enemies[enemy] + " aparecio! #\n");
-			while(enemyHealth > 0) {										// Give you options to fight, drink a health pot or run when the enemy HP > 0
+			while(enemyHealth >0 && health>0) {										// Give you options to fight, drink a health pot or run when the enemy HP > 0
 				accion=false;
                                 String monstAscii=impresion.retString(enemy);
                                 System.out.println(monstAscii);
@@ -57,22 +58,21 @@ public class JavaApplication7 {
 				System.out.println("\n\t QUE QUIERES HACER?");
 				System.out.println("\t1. Atacar");
 				System.out.println("\t2. Beber pocion recuperadora");
-				System.out.println("\t3. Rendirte");
+				System.out.println("\t3. Rendirte\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                                 while( accion==false){
                                     if(Boton1.isHigh()) {									
 					int damageDealt = rand.nextInt(attackDamage);
 					int damageTaken = rand.nextInt(enemyAttackDamage);
 					enemyHealth -= damageDealt;
 					health -= damageTaken;
-					System.out.println("\t> Le ocasionaste a " + enemy + " un daño de " + damageDealt + " puntos de vida");
+                                        try{Thread.sleep(1000);}catch(InterruptedException ex){}
+					System.out.println("\t> Le ocasionaste a " + enemies[enemy] + " un daño de " + damageDealt + " puntos de vida");
 					System.out.println("\t> Recibiste " + damageTaken + " puntos de dano");
-                                        accion=true;
-                                   
-					try{
-                                          Thread.sleep(1000);
-                                        }catch(InterruptedException ex){
-
+                                        if(health < 1) {
+                                	System.out.println("Has muerto");
+                                        break;
                                         }
+                                        accion=true;
 					if(health < 1) {
 						System.out.println("\t> Has sido vencido.");
 						break;
@@ -95,42 +95,43 @@ public class JavaApplication7 {
 					health=-1;
                                         break;
                                     }
+                                    
+                                     
                                 }
 			}
-			if(health < 1) {
-				System.out.println("Has muerto");
-				break;
-			}
-			System.out.println("----------------------------");
-			System.out.println(" # Venciste a  " + enemies[enemy] + " # \n");
-                        enemy++;
-                        if(enemy<6){
-                            System.out.println(" # Te quedan -- " + health + " -- puntos de vida.");
-                            if(rand.nextInt(100) > healthPotionDropChance) {
-				numHealthPots++;
-				System.out.println(  enemy + "solto una pocion");
-				System.out.println(" # You now have " + numHealthPots + "health pot(s)");
-                            }
-                            accion=false;
+                        if(health>0){
                             System.out.println("----------------------------");
-                            System.out.println("Que procede?");
-                            System.out.println("1. Siguiente oponente");
-                            System.out.println("2. Escapar del laberinto");
-                            while(accion==false){
-                                if(Boton1.isHigh()) {
-                                    System.out.println("You continiue on your adventure!");
-                                    accion=true;
-                                    try{Thread.sleep(500);}catch(InterruptedException ex){};
+                            System.out.println(" # Venciste a  " + enemies[enemy] + " # \n");
+                            enemy++;
+                            if(enemy<6){
+                                System.out.println(" # Te quedan -- " + health + " -- puntos de vida.");
+                                if(rand.nextInt(100) > healthPotionDropChance) {
+                                    numHealthPots++;
+                                    System.out.println(  enemy + "solto una pocion");
+                                    System.out.println(" # You now have " + numHealthPots + "health pot(s)");
                                 }
-                                else if(Boton2.isHigh()) {
-                                    System.out.println("Te has rendido cobardemente");
-                                    try{Thread.sleep(500);}catch(InterruptedException ex){};
-                                    break;
-                                }
+                                accion=false;
+                                System.out.println("----------------------------");
+                                System.out.println("Que procede?");
+                                System.out.println("1. Siguiente oponente");
+                                System.out.println("2. Escapar del laberinto");
+                                while(accion==false){
+                                    if(Boton1.isHigh()) {
+                                        System.out.println("You continiue on your adventure!");
+                                        accion=true;
+                                        try{Thread.sleep(500);}catch(InterruptedException ex){};
+                                    }
+                                    else if(Boton2.isHigh()) {
+                                        System.out.println("Te has rendido cobardemente");
+                                        health=-1;
+                                        try{Thread.sleep(500);}catch(InterruptedException ex){};
+                                        break;
+                                    }
+                                }    
                             }
                         }
                 }
-		if(enemy<6)
+		if(enemy==6)
 		System.out.println(impresion.Ganaste); 
                 else
                     System.out.println(impresion.perdiste);
