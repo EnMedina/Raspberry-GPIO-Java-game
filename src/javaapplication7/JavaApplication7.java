@@ -118,7 +118,7 @@ public class JavaApplication7 {
                                 System.out.println("2. Escapar del laberinto\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                                 while(accion==false){
                                     if(Boton1.isHigh()) {
-                                        System.out.println("You continiue on your adventure!");
+                                        System.out.println("Prosigues en el calabozo!");
                                         accion=true;
                                         try{Thread.sleep(500);}catch(InterruptedException ex){};
                                     }
